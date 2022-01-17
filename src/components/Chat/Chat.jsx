@@ -18,6 +18,7 @@ const Chat = () => {
     const [users, setUsers] = useState('')
     let location = useLocation()
     const ENDPOINT = 'https://socket-messenger-application.herokuapp.com/'
+    // use this endpoint for development
     // const ENDPOINT = 'http://localhost:5000'
     useEffect(() => {  
         console.log('just connected')
@@ -28,42 +29,40 @@ const Chat = () => {
 
         setName(name);
         setRoom(room);
-      
+        
 
         socket.emit("join", { name, room }, () => {
             console.log('callback here')
             
         });
-
+        
         // unmount
         return () => {
             socket.emit("disconnect")
             socket.off()
         }
     }, [ENDPOINT, location.search])
-
+    
     useEffect(() => {
         socket.on('message', (message) => {
-            
-            
-            setMessages([...messages, message])
-        
+        setMessages([...messages, message])
+    
         })
+    }, [message]) 
+
+    useEffect(() => {
         socket.on("roomData", ({ users }) => {
             setUsers(users);
-          });
-    }, [messages])
+        });
+    }, [])
     
 
-        
-    // function for sending messages
     const sendMessage = (event) => {
-        event.preventDefault();
-        if(message) {
-            socket.emit('sendMessage', message, () => setMessage(''))
-        }
+        event.preventDefault();       
+        socket.emit('sendMessage', message, () => setMessage(''))
     }
-
+    
+    
     return (
         <div className="outerContainer">
             <div className="container">
