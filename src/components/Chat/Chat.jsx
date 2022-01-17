@@ -13,8 +13,8 @@ let socket;
 const Chat = () => {
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
-    const [message , setMessage] = useState('')
-    const [messages , setMessages] = useState([])
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([])
     const [users, setUsers] = useState('')
     let location = useLocation()
     const ENDPOINT = 'https://socket-messenger-application.herokuapp.com/'
@@ -42,14 +42,14 @@ const Chat = () => {
             socket.off()
         }
     }, [ENDPOINT, location.search])
+
     
     useEffect(() => {
         socket.on('message', (message) => {
-        setMessages([...messages, message])
-    
+        let messageLength = messages.length
+        messages[messageLength] = message     
         })
-    }, [message]) 
-
+    }, [messages]) 
     useEffect(() => {
         socket.on("roomData", ({ users }) => {
             setUsers(users);
