@@ -17,7 +17,8 @@ const Chat = () => {
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState('')
     let location = useLocation()
-    const ENDPOINT = 'https://socket-messenger-application.herokuapp.com/'
+    // const ENDPOINT = 'https://socket-messenger-application.herokuapp.com/'
+    const ENDPOINT = 'https://chat-messenger-backend.onrender.com'
     // use this endpoint for development
     // const ENDPOINT = 'http://localhost:5000'
     useEffect(() => {  
